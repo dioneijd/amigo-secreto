@@ -1,5 +1,4 @@
 const mongo = require('mongoose')
-const Person = require('../models/Person')
 const Group = require('../models/Group')
 
 const Persons = {
@@ -9,8 +8,16 @@ const Persons = {
 
     async show (req, res) {        
         const personId = req.params.id
-        const group = await Group.find({"people._id": personId})
-        let person = group[0].people.find(person => person._id == personId)
+        let group = await Group.find({"people._id": personId})
+        group = group[0]
+        let person = group.people.find(person => person._id == personId)
+
+        person = {
+            _id: person._id,
+            name: person.name,
+            friend: person.friend,
+            grpName: group.name
+        }
 
         if (!person) {
             person = { error: `Person id ${req.params.id} not found` }
