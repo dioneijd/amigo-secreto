@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu amigo é</title>
+
+    <link rel="stylesheet" href="ShowFriend/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <h1></h1>
+    <h2></h2>
+
+
+
+    <script defer>
+        const message = document.querySelector('h1')
+        const groupName = document.querySelector('h2')
+        
+        const personId = window.location.pathname
+        
+        async function drawData() {
+            const response = await axios.get(`/person${personId}`)
+    
+            message.innerText = `Olá ${response.data.name}, o seu amigo secreto é ${response.data.friend}`
+            groupName.innerText = `GRUPO: ${response.data.grpName.toUpperCase()}`
+        }        
+        
+        drawData()
+
+    </script>
+
+
+</body>
+</html>
