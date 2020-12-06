@@ -8,7 +8,12 @@ const Groups = {
     },
 
     async show (req, res) {
-        return res.send('To be implemented')
+        let group = await Group.findById(req.params.id)
+
+        if (!group) {
+            group = { error: `Group id ${req.params.id} not found` }
+        }
+        return res.json(group)
     },
 
     async store (req, res) {

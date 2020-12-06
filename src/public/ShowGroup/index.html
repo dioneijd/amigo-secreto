@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu grupo de amigo secreto</title>
+
+    <link rel="stylesheet" href="./style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <h1></h1>
+
+    <ul id="people">
+        <li>
+            dionei
+        </li>
+        <li>
+            Manue
+        </li>
+    </ul>
+
+
+
+    <script defer>
+        const groupName = document.querySelector('h1')
+        const people = document.querySelector('ul')
+        
+        const grpId = window.location.pathname.replace('/showGroup/','')
+
+        async function drawData() {
+            const response = await axios.get(`/groups/${grpId}`)
+    
+            groupName.innerText = `GRUPO: ${response.data.name.toUpperCase()}`
+            people.innerHTML = ''
+
+            response.data.people.forEach(person => {
+                people.innerHTML += `<li>${person.name}</li>`
+            })
+        }        
+        
+        drawData()
+
+    </script>
+
+
+</body>
+</html>
