@@ -4,7 +4,9 @@ const Group = require('../models/Group')
 
 const Groups = {
     async index (req, res) {
-        return res.send('To be implemented')
+        const groups = await Group.find()
+        const groupsIds = groups.map( grp => grp._id)
+        return res.json(groupsIds)
     },
 
     async show (req, res) {
@@ -18,6 +20,23 @@ const Groups = {
 
     async store (req, res) {
         let grp = req.body
+
+        if (grp.name == "" || grp.name == undefined)
+            return res.status(400).json({errorMsg: 'Its missing the group name'})
+
+        if (grp.people == undefined)
+            return res.status(400).json({errorMsg: 'Its missing the people'})
+        
+        if (grp.people.length < 3) 
+            return res.status(400).json({errorMsg: 'It should have at least 3 people to create a group'})
+        
+        // grp.people.sort()
+        // if (grp.people.find((p, i) => grp.people.length == i+1 ? false : p.name == grp.people[i+1].name ))
+        // {
+        //     return res.status(400).json({errorMsg: 'People node has duplicate names, it not allowed.'})
+        // }
+
+
 
         let peopleShuffle = JSON.parse(JSON.stringify(grp.people))
         let hasProblem = false
@@ -42,7 +61,7 @@ const Groups = {
         const groupStored = await Group.create(grp)
 
         if (groupStored) return res.json(groupStored)        
-        return res.json({error: "erro to create group"})
+        return res.status(500).json({error: "erro to create group"})
 
     },
 
