@@ -1,0 +1,18 @@
+{
+  "name": "amigo-secreto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": "https://github.com/dioneijd/amigo-secreto.git",
+  "author": "Dionei J. Delangolo <dionei.jd@gmail.com>",
+  "scripts": {
+    "dev": "nodemon packages/server/src/server.js",
+    "start": "node packages/server/src/server.js"
+  },
+  "license": "MIT"
+}

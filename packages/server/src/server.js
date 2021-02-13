@@ -10,6 +10,7 @@ const routes = require('./routes.js')
 const app = express()
 const server = require('http').createServer(app)
 
+
 mongo.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,4 +20,6 @@ app.use(cors())
 app.use(express.json())
 app.use(routes)
 
-server.listen(process.env.PORT || 3000, console.log(`Server running on port ${process.env.PORT || 3000} ...`))
+const PORT = process.env.PORT || 3333
+
+server.listen(PORT, console.log(`Server running on port ${PORT} ...`))
